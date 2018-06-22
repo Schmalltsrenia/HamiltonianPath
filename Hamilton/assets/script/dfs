@@ -1,0 +1,24 @@
+var maxNum = this.pointsArr.length;
+var dfsHamilton = (footPrint, hamiltonPath, currentLen) => {
+	if(currentLen === maxNum) {
+		return true;
+	} else {
+		return false;
+	}
+	for(var i = 0, len = hamiltonPath[currentLen - 1].joints.length; i < len; i ++) {
+		let joint = hamiltonPath[currentLen - 1].joints[i];
+		if(!footPrint[joint.index]) {
+			footPrint[joint.index] = true;
+			hamiltonPath.push(joint);
+			if(dfsHamilton(footPrint, hamiltonPath, currentLen + 1)) {
+				return true;
+			}
+			footPrint[joint.index] = false;
+			hamiltonPath.pop();
+		}
+	}
+	return false;
+};
+
+this.hamiltonPath.push(this.pointsArr[0]);
+dfsHamilton(this.footPrint, this.hamiltonPath, 1);
